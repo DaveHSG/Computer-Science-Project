@@ -1,3 +1,4 @@
+# parts of the below city data was generated using ChatGPT, and has been manually verified
 # this import function initialises the connection with SQLite 
 import sqlite3
 # this defines the list of activity types
