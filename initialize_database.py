@@ -1,7 +1,8 @@
+# this import function initialises the connection with SQLite 
 import sqlite3
-
+# this defines the list of activity types
 activity_names = ["Culture & Historical Exploration", "Urban Entertainment & Nightlife", "Nature & Outdoor Adventure", "Relaxation & Wellness"]
-
+# the following represents the list of city IDs, geolocation and country where it is
 raw_city_data = {
     "Istanbul": (41.0082, 28.9784, "Turkey"),
     "Moscow": (55.7558, 37.6173, "Russia"),
@@ -65,6 +66,7 @@ raw_city_data = {
     "Tirana": (41.3275, 19.8189, "Albania")
 }
 
+# the following lists 8 activites per type, for each of the above cities
 custom_city_activities = {
    "Basel": {
         "Culture & Historical Exploration": [
@@ -2620,12 +2622,13 @@ CREATE TABLE city_activities (
     FOREIGN KEY (city_id) REFERENCES cities(id),
     FOREIGN KEY (activity_id) REFERENCES activities(id)
 )''')
-
+# this block inserts each activity name into the activites table and 
 activity_ids = {}
 for name in activity_names:
     cursor.execute("INSERT INTO activities (name) VALUES (?)", (name,))
     activity_ids[name] = cursor.lastrowid
 
+# this part inserts details of cities and retrieves city details
 for city, (lat, lon, country) in raw_city_data.items():
     cursor.execute("INSERT INTO cities (name, latitude, longitude, country) VALUES (?, ?, ?, ?)",
                    (city, lat, lon, country))
@@ -2645,6 +2648,7 @@ for city, (lat, lon, country) in raw_city_data.items():
                 INSERT INTO city_activities (city_id, activity_id, description)
                 VALUES (?, ?, NULL)
             ''', (city_id, activity_id))
-
+            
+# this function saves the changes in the database and closes it 
 conn.commit()
 conn.close()
