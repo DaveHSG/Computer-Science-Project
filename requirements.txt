@@ -1,0 +1,9 @@
+plotly
+streamlit
+googlemaps
+requests
+geopy
+pandas
+scikit-learn
+joblib
+matplotlib
